@@ -16,7 +16,7 @@ handler.setFormatter(
 logger.addHandler(handler)
 
 os.environ["MOVERSCORE_MODEL"] = "distilbert-base-multilingual-cased"
-import moverscore_v2 as mv_sc
+# import moverscore_v2 as mv_sc
 
 from nltk.translate.bleu_score import sentence_bleu
 from nltk.translate.bleu_score import SmoothingFunction
