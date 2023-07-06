@@ -12,7 +12,7 @@ EOS = "</seq>"
 PAD = "<pad/>"
 UNK = "<unk/>"
 
-SUPPORTED_ARCHS = ("sgns", "char")
+SUPPORTED_ARCHS = ("sgns", "char","electra")
 
 # A dataset is a container object for the actual data
 class JSONDataset(Dataset):
