@@ -117,6 +117,7 @@ Each dataset file correspond to a data split (train/dev/test) for one of the lan
 
 Dataset files are in the JSON format. A dataset file contains a list of examples. Each example is a JSON dictionary, containing the following keys:
  + "id",
+ + "word"
  + "gloss"
  + "sgns"
  + "electra"
