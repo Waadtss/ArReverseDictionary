@@ -235,9 +235,9 @@ def main(args):
         args.submission_file = submission_file
         args.reference_file = (
             args.reference_files_dir
-            / f"{summary.lang}.test.{summary.track}.complete.json"
+            / f"{summary.lang}.test-partw2v.json"
         )
-        eval_func = eval_revdict if summary.track == "revdict" else eval_defmod
+        eval_func = eval_revdict
         eval_func(args, summary)
 
     if args.output_file.is_dir():
@@ -250,7 +250,7 @@ def main(args):
         summaries = [check_output.main(f) for f in files]
         assert len(set(summaries)) == len(files), "Ensure files map to unique setups."
         rd_cfg = [
-            (s.lang, a) for s in summaries if s.track == "revdict" for a in s.vec_archs
+            (s.lang, a) for s in summaries for a in s.vec_archs
         ]
         assert len(set(rd_cfg)) == len(rd_cfg), "Ensure files map to unique setups."
         for summary, submitted_file in zip(summaries, files):
