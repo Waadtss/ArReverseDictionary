@@ -1,13 +1,13 @@
 # Comparing Dictionaries and Word Embeddings
 
-This is the repository for the SemEval 2022 Shared Task #1: Comparing
-Dictionaries and Word Embeddings (CODWOE).
+This is the repository for the XXX
+which forked from ***SemEval 2022 Shared Task #1: Comparing
+Dictionaries and Word Embeddings (CODWOE)***.
 
-This repository currently contains: the configuration for the codalab
-competition, a Docker image to reproduce the environment, a scorer, a
-format-checker and baseline programs to help participants get started.
+This repository currently contains: the baseline programs,  a scorer, a
+format-checker to help participants get started.
 
-Participants may be interested in the script `codwoe_entrypoint.py`. It contains
+Participants may be interested in the script `revdict_entrypoint.py`. It contains
 a number of useful features, such as scoring submissions, a format checker and a
 few simple baseline architectures. It is also the exact copy of what is used on
 the codalab.
@@ -182,7 +182,7 @@ Other keys can be added. More details concerning the evaluation procedure are av
 # Using this repository
 
 The code and data of this shared task are provided under a CC-BY-SA license.
-If you use thhis repository in your researcj, please cite the task paper (to appear):
+If you use this repository in your research, please cite the task paper (to appear):
 ```
 @inproceedings{mickus-etal-2022-semeval,
     title = "{S}emeval-2022 Task 1: {CODWOE} {--} Comparing Dictionaries and Word Embeddings",
