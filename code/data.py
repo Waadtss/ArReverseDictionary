@@ -12,13 +12,13 @@ EOS = "</seq>"
 PAD = "<pad/>"
 UNK = "<unk/>"
 
-SUPPORTED_ARCHS = ("sgns", "char","electra")
+SUPPORTED_ARCHS = (["sgns"])
 
 # A dataset is a container object for the actual data
 class JSONDataset(Dataset):
     """Reads a CODWOE JSON dataset"""
 
-    def __init__(self, file, vocab=None, freeze_vocab=False, maxlen=256):
+    def __init__(self, file, vocab=None, freeze_vocab=False, maxlen=300):
         """
         Construct a torch.utils.data.Dataset compatible with torch data API and
         codwoe data.
@@ -61,6 +61,7 @@ class JSONDataset(Dataset):
             # in reverse dictionary test datasets, vector targets are absent
             for arch in SUPPORTED_ARCHS:
                 if arch in json_dict:
+
                     json_dict[f"{arch}_tensor"] = torch.tensor(json_dict[arch])
             if "electra" in json_dict:
                 json_dict["electra_tensor"] = torch.tensor(json_dict["electra"])
