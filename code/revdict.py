@@ -217,7 +217,7 @@ def eval(args):
     ## make datasets
     #train_dataset = data.JSONDataset(args.train_file)
     train_vocab = data.JSONDataset.load(args.save_dir / "train_dataset.pt").vocab
-    model = models.DefmodModel.load(args.save_dir / "model.pt")
+    model = models.RevdictModel.load(args.save_dir / "model.pt")
     dev_dataset = data.JSONDataset(args.dev_file, vocab=train_vocab, freeze_vocab=True, maxlen=model.maxlen)
     ## assert they correspond to the task
     # assert train_dataset.has_gloss, "Training dataset contains no gloss."
@@ -299,7 +299,7 @@ def eval(args):
 def pred(args):
     assert args.test_file is not None, "Missing dataset for test"
     # 1. retrieve vocab, dataset, model
-    model = models.DefmodModel.load(args.save_dir / "model.pt")
+    model = models.RevdictModel.load(args.save_dir / "model.pt")
     train_vocab = data.JSONDataset.load(args.save_dir / "train_dataset.pt").vocab
     test_dataset = data.JSONDataset(
         args.test_file, vocab=train_vocab, freeze_vocab=True, maxlen=model.maxlen
