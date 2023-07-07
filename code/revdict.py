@@ -54,8 +54,15 @@ def get_parser(
         "--target_arch",
         type=str,
         default="electra",
-        #choices=("sgns", "char", "electra"),
+        choices=("sgns", "electra"),
         help="embedding architecture to use as target",
+    )
+    parser.add_argument(
+        "--max_len",
+        type=int,
+        default=256,
+        choices=(300, 256),
+        help="dimension of embedding",
     )
     parser.add_argument(
         "--summary_logdir",
@@ -91,7 +98,7 @@ def train(args):
     # 1. get data, vocabulary, summary writer
     logger.debug("Preloading data")
     ## make datasets
-    train_dataset = data.JSONDataset(args.train_file)
+    train_dataset = data.JSONDataset(args.train_file, maxlen=args.max_len)
     if args.dev_file:
         dev_dataset = data.JSONDataset(args.dev_file, vocab=train_dataset.vocab)
     ## assert they correspond to the task
@@ -117,7 +124,7 @@ def train(args):
     # 2. construct model
     ## Hyperparams
     logger.debug("Setting up training environment")
-    model = models.RevdictModel(train_dataset.vocab).to(args.device)
+    model = models.RevdictModel(train_dataset.vocab, d_model=args.max_len).to(args.device)
     model.train()
 
     # 3. declare optimizer & criterion

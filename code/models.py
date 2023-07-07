@@ -33,7 +33,7 @@ class RevdictModel(nn.Module):
     """A transformer architecture for Reverse Dictionary"""
 
     def __init__(
-        self, vocab, d_model=300, n_head=4, n_layers=4, dropout=0.3, maxlen=512
+        self, vocab, d_model=256, n_head=4, n_layers=4, dropout=0.3, maxlen=512
     ):
         super(RevdictModel, self).__init__()
         self.d_model = d_model
