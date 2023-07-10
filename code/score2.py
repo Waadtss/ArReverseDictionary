@@ -6,8 +6,8 @@ import logging
 import os
 import pathlib
 import sys
-# import torchmetrics
-# from ignite.metrics import Accuracy
+import torchmetrics
+from ignite.metrics import Accuracy
 
 logger = logging.getLogger(pathlib.Path(__file__).name)
 logger.setLevel(logging.DEBUG)
@@ -171,28 +171,59 @@ def rank_cosine(preds, targets):
     
     return ranks / preds.size(0)
 
-def closest_ranks(preds, targets):  
-    assocs = F.normalize(preds) @ F.normalize(targets).T
-    ranks = (assocs >= torch.diagonal(assocs, 0).unsqueeze(1)).sum(1).float()
+def closest_ranks2(preds, targets, train):  
     
+    # Append train tensor to targets
+    mixed_targets = torch.cat((targets, train), dim=0)
+    #assocs = F.normalize(preds) @ F.normalize(mixedtargets).T
+    #print("assocs", assocs)
+    #ranks = (assocs >= torch.diagonal(assocs, 0).unsqueeze(1)).sum(1).float()
+    print(preds.size(), mixed_targets.size())
+    ranks = torch.mm(preds, mixed_targets.T)
+
+    print("rank", ranks)
+    #print("assocs.size(0)", assocs.size())
     closest_ranks = []
     cosine_similarities = []
     precision_at_1=[]
 
     for i in range(len(preds)):
         pred_rank = ranks[i]
+        print(1)
         distances = torch.abs(ranks - pred_rank)
+        print(2)
         closest_rank = torch.argmin(distances)
+        print(closest_rank.item()==i)
         precision_at_1.append(closest_rank.item()==i)
-        closest_rank_embedding = targets[closest_rank]
-        closest_ranks.append(closest_rank_embedding)
+        #closest_rank_embedding = targets[closest_rank]
+        #closest_ranks.append(closest_rank_embedding)
     print("c",precision_at_1)
     print("accuracy", sum(precision_at_1)/len(preds))
 
-    closest_ranks_tensor = torch.stack(closest_ranks)
-    cosine_similarities = F.cosine_similarity(preds, closest_ranks_tensor)
+    # closest_ranks_tensor = torch.stack(closest_ranks)
+    # cosine_similarities = F.cosine_similarity(preds, closest_ranks_tensor)
 
-    return cosine_similarities
+    return precision_at_1
+
+def closest_ranks(preds, targets, train):
+    # Append train tensor to targets
+    # mixed_targets = torch.cat((targets, train), dim=0)
+    mixed_targets = torch.cat((targets,), dim=0)
+    
+    # Calculate cosine similarity between preds and mixed_targets
+    cosine_similarities = torch.mm(preds, mixed_targets.T)
+    
+    # Calculate the closest rank for each prediction
+    closest_ranks = torch.argmin(torch.abs(cosine_similarities - cosine_similarities.diag().unsqueeze(1)), dim=1)
+    print(closest_ranks)
+    # Calculate precision at 1
+    precision_at_1 = (closest_ranks == torch.arange(len(preds))).tolist()
+    
+    accuracy = sum(precision_at_1) / len(preds)
+    print("Accuracy:", accuracy)
+    
+    return precision_at_1
+
 
 def eval_revdict(args, summary):
     # 1. read contents
@@ -201,6 +232,8 @@ def eval_revdict(args, summary):
         submission = sorted(json.load(fp), key=lambda r: r["id"])
     with open(args.reference_file, "r") as fp:
         reference = sorted(json.load(fp), key=lambda r: r["id"])
+    with open('/content/gdrive/MyDrive/sharedTask/lookups/Train.json', "r") as fp:
+        train = sorted(json.load(fp), key=lambda r: r["id"])
     vec_archs = sorted(
         set(submission[0].keys())
         - {
@@ -218,6 +251,9 @@ def eval_revdict(args, summary):
     ## define accumulators for rank-cosine
     all_preds = collections.defaultdict(list)
     all_refs = collections.defaultdict(list)
+    all_train = collections.defaultdict(list)
+
+  
 
     assert len(submission) == len(reference), "Missing items in submission!"
     ## retrieve vectors
@@ -226,14 +262,14 @@ def eval_revdict(args, summary):
         for arch in vec_archs:
             all_preds[arch].append(sub[arch])
             all_refs[arch].append(ref[arch])
+    for ii in range(len(train)):
+        all_train[arch].append(train[ii][arch])
 
     torch.autograd.set_grad_enabled(False)
     all_preds = {arch: torch.tensor(all_preds[arch]) for arch in vec_archs}
     all_refs = {arch: torch.tensor(all_refs[arch]) for arch in vec_archs}
-    print("all_preds[arch][:][i]", all_preds[arch][:][0])
-    print("all_refs[arch][:][i]", all_refs[arch][:][0])
-    print("all_preds[arch][:][i]==all_refs[arch][:][i]", all_preds[arch][:][0]==all_refs[arch][:][0])
-
+    all_train= {arch: torch.tensor(all_train[arch]) for arch in vec_archs}
+  
 
     # acc= torchmetrics.Precision(task='multiclass') 
     #.Accuracy()
@@ -250,7 +286,7 @@ def eval_revdict(args, summary):
         arch: rank_cosine(all_preds[arch], all_refs[arch]) for arch in vec_archs
     }
     cos_closest_ranks={
-        arch: closest_ranks(all_preds[arch], all_refs[arch]).mean().item() for arch in vec_archs
+        arch: closest_ranks(all_preds[arch], all_refs[arch], all_train[arch]) for arch in vec_archs
 
     }
 
@@ -292,7 +328,7 @@ def main(args):
         args.submission_file = submission_file
         args.reference_file = (
             args.reference_files_dir
-            / f"{summary.lang}.newDvNotRep.json"
+            / f"{summary.lang}.newDvNotRepcopy.json"
         )
         eval_func = eval_revdict
         eval_func(args, summary)
