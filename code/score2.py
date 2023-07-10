@@ -6,8 +6,7 @@ import logging
 import os
 import pathlib
 import sys
-import torchmetrics
-from ignite.metrics import Accuracy
+
 
 logger = logging.getLogger(pathlib.Path(__file__).name)
 logger.setLevel(logging.DEBUG)
@@ -328,7 +327,7 @@ def main(args):
         args.submission_file = submission_file
         args.reference_file = (
             args.reference_files_dir
-            / f"{summary.lang}.newDvNotRepcopy.json"
+            / f"{summary.lang}.newDvNotRep.json"
         )
         eval_func = eval_revdict
         eval_func(args, summary)
