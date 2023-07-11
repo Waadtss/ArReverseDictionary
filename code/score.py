@@ -6,8 +6,8 @@ import logging
 import os
 import pathlib
 import sys
-# import torchmetrics
-# from ignite.metrics import Accuracy
+import pandas as pd
+
 
 logger = logging.getLogger(pathlib.Path(__file__).name)
 logger.setLevel(logging.DEBUG)
@@ -89,110 +89,120 @@ def mover_corpus_score(sys_stream, ref_streams, trace=0):
     return corpus_score
 
 
-def eval_defmod(args, summary):
-    # 1. read contents
-    ## define accumulators for lemma-level BLEU and MoverScore
-    reference_lemma_groups = collections.defaultdict(list)
-    all_preds, all_tgts = [], []
-    ## reading data files
-    with open(args.submission_file, "r") as fp:
-        submission = sorted(json.load(fp), key=lambda r: r["id"])
-    with open(args.reference_file, "r") as fp:
-        reference = sorted(json.load(fp), key=lambda r: r["id"])
-
-    # 2. compute scores
-    ## compute sense-level BLEU
-    assert len(submission) == len(reference), "Missing items in submission!"
-    id_to_lemma = {}
-    pbar = tqdm.tqdm(total=len(submission), desc="S-BLEU", disable=None)
-    for sub, ref in zip(submission, reference):
-        assert sub["id"] == ref["id"], "Mismatch in submission and reference files!"
-        all_preds.append(sub["gloss"])
-        all_tgts.append(ref["gloss"])
-        sub["gloss"] = tokenize(sub["gloss"])
-        ref["gloss"] = tokenize(ref["gloss"])
-        sub["sense-BLEU"] = bleu(sub["gloss"], ref["gloss"])
-        reference_lemma_groups[(ref["word"], ref["pos"])].append(ref["gloss"])
-        id_to_lemma[sub["id"]] = (ref["word"], ref["pos"])
-        pbar.update()
-    pbar.close()
-    ## compute lemma-level BLEU
-    for sub in tqdm.tqdm(submission, desc="L-BLEU", disable=None):
-        sub["lemma-BLEU"] = max(
-            bleu(sub["gloss"], g)
-            for g in reference_lemma_groups[id_to_lemma[sub["id"]]]
-        )
-    lemma_bleu_average = sum(s["lemma-BLEU"] for s in submission) / len(submission)
-    sense_bleu_average = sum(s["sense-BLEU"] for s in submission) / len(submission)
-    ## compute MoverScore
-    # moverscore_average = np.mean(mv_sc.word_mover_score(
-    #     all_tgts,
-    #     all_preds,
-    #     collections.defaultdict(lambda:1.),
-    #     collections.defaultdict(lambda:1.),
-    #     stop_words=[],
-    #     n_gram=1,
-    #     remove_subwords=False,
-    #     batch_size=1,
-    # ))
-    moverscore_average = mover_corpus_score(all_preds, [all_tgts])
-    # 3. write results.
-    # logger.debug(f"Submission {args.submission_file}, \n\tMvSc.: " + \
-    #     f"{moverscore_average}\n\tL-BLEU: {lemma_bleu_average}\n\tS-BLEU: " + \
-    #     f"{sense_bleu_average}"
-    # )
-    with open(args.output_file, "a") as ostr:
-        print(f"MoverScore_{summary.lang}:{moverscore_average}", file=ostr)
-        print(f"BLEU_lemma_{summary.lang}:{lemma_bleu_average}", file=ostr)
-        print(f"BLEU_sense_{summary.lang}:{sense_bleu_average}", file=ostr)
-    return (
-        args.submission_file,
-        moverscore_average,
-        lemma_bleu_average,
-        sense_bleu_average,
-    )
-
 
 def rank_cosine(preds, targets):
     assocs = F.normalize(preds) @ F.normalize(targets).T
     refs = torch.diagonal(assocs, 0).unsqueeze(1)
-    print("assocs >= refs", assocs >= refs,
-    "\nrefs", refs,
-    "\nrefs[0]", refs[:][0])
     ranks = (assocs >= refs).sum(1).float()
-    print("preds.size(0)", preds.size(0),
-    "\nassocs", assocs.size(0),
-    "\nranks", ranks)
     assert ranks.numel() == preds.size(0)
     ranks = ranks.mean().item()
-    print("preds.size(0)", preds.size(),
-    "\nassocs", assocs.size(),
-    "\nranks", ranks)
     
     return ranks / preds.size(0)
 
-def closest_ranks(preds, targets):  
-    assocs = F.normalize(preds) @ F.normalize(targets).T
-    ranks = (assocs >= torch.diagonal(assocs, 0).unsqueeze(1)).sum(1).float()
+def closest_ranks2(preds, targets, train):  
     
+    # Append train tensor to targets
+    mixed_targets = torch.cat((targets, train), dim=0)
+    #assocs = F.normalize(preds) @ F.normalize(mixedtargets).T
+    #print("assocs", assocs)
+    #ranks = (assocs >= torch.diagonal(assocs, 0).unsqueeze(1)).sum(1).float()
+    print(preds.size(), mixed_targets.size())
+    ranks = torch.mm(preds, mixed_targets.T)
+
+    print("rank", ranks)
+    #print("assocs.size(0)", assocs.size())
     closest_ranks = []
     cosine_similarities = []
     precision_at_1=[]
 
     for i in range(len(preds)):
         pred_rank = ranks[i]
+        print(1)
         distances = torch.abs(ranks - pred_rank)
+        print(2)
         closest_rank = torch.argmin(distances)
+        print(closest_rank.item()==i)
         precision_at_1.append(closest_rank.item()==i)
-        closest_rank_embedding = targets[closest_rank]
-        closest_ranks.append(closest_rank_embedding)
-    print("c",precision_at_1)
-    print("accuracy", sum(precision_at_1)/len(preds))
+        #closest_rank_embedding = targets[closest_rank]
+        #closest_ranks.append(closest_rank_embedding)
+    # print("c",precision_at_1)
+    # print("accuracy", sum(precision_at_1)/len(preds))
 
-    closest_ranks_tensor = torch.stack(closest_ranks)
-    cosine_similarities = F.cosine_similarity(preds, closest_ranks_tensor)
+    # closest_ranks_tensor = torch.stack(closest_ranks)
+    # cosine_similarities = F.cosine_similarity(preds, closest_ranks_tensor)
 
-    return cosine_similarities
+    return precision_at_1
+
+def closest_ranks(preds, targets, train, targetsword, trainword):
+    # Append train tensor to targets
+    mixed_targets = torch.cat((targets, ), dim=0)
+    # mixed_targetsword = torch.cat((targetsword, trainword), dim=0)
+    mixed_targetsword = targetsword #+ trainword
+    print("mixed_targetsword[:][0]", mixed_targetsword[0])
+    
+    # Calculate cosine similarity between preds and mixed_targets
+    cosine_similarities = torch.mm(preds, mixed_targets.T)
+    print("cosine_similarities", cosine_similarities)
+    
+    # Find the indices of the top 10 closest ranks for each prediction
+    _, topk_indices = torch.topk(-cosine_similarities, k=10, dim=1)
+    print("topk_indices", topk_indices)
+    
+    
+    # # Get the indices of the top 10 closest ranks in the original targets tensor
+    # closest_indices = topk_indices % targets.size(0)
+
+    # Get the indices of the top 10 closest ranks in the original targets tensor
+    closest_indices = torch.empty_like(topk_indices)
+    for i in range(len(preds)):
+        closest_indices[i] = topk_indices[i] - targets.size(0) if i < targets.size(0) else topk_indices[i]
+    listOftop10=[]
+    for i in range(len(preds)):
+      listOftop10.append([])
+      for x in topk_indices[i]:
+          listOftop10[i].append(mixed_targetsword[x])
+    
+    print("listOftop10", listOftop10)
+    # Calculate the closest rank for each prediction
+    # closest_ranks = torch.argmin(torch.abs(cosine_similarities - cosine_similarities.diag().unsqueeze(1)), dim=1)
+    
+    print("closest_ranks", closest_ranks)
+    print("closest_indices", closest_indices)
+    
+    # Retrieve words corresponding to closest_indices
+    # closest_words = mixed_targetsword[closest_indices.flatten()].reshape(closest_indices.shape)
+    
+    # # Retrieve words corresponding to closest_indices
+    # closest_words = [mixed_targetsword[i.item()] for i in closest_indices.flatten()]
+    # print("closest_words", closest_words)
+    # closest_words = torch.tensor(closest_words).reshape(closest_indices.shape)
+    # Create a DataFrame with mixed_targetsword
+    df = pd.DataFrame(mixed_targetsword, columns=["word"])
+
+    # Convert tensor indices to NumPy array and take absolute values
+    closest_indices_np = torch.abs(closest_indices).numpy()
+    
+    # Retrieve words corresponding to closest_indices
+    closest_words = df.loc[closest_indices_np.flatten(), "word"].values.reshape(closest_indices.shape).tolist()
+    
+    # Calculate precision at 1
+    # precision_at_1 = (closest_ranks == torch.arange(len(preds))).float()
+    
+    # accuracy = precision_at_1.mean().item()
+    # print("Accuracy:", accuracy)
+    print("closest_words", closest_words)
+
+    top10=pd.DataFrame()
+    top10["target"]=targetsword
+    top10["top10preds"]=closest_words
+    print("top10", top10)
+    # Save top10 DataFrame to a JSON file
+    top10.to_json("/content/gdrive/MyDrive/sharedTask/top10.json", orient="records")
+    
+    
+    return closest_words
+
+
 
 def eval_revdict(args, summary):
     # 1. read contents
@@ -201,6 +211,8 @@ def eval_revdict(args, summary):
         submission = sorted(json.load(fp), key=lambda r: r["id"])
     with open(args.reference_file, "r") as fp:
         reference = sorted(json.load(fp), key=lambda r: r["id"])
+    with open('/content/gdrive/MyDrive/sharedTask/lookups/Train.json', "r") as fp:
+        train = sorted(json.load(fp), key=lambda r: r["id"])
     vec_archs = sorted(
         set(submission[0].keys())
         - {
@@ -218,21 +230,45 @@ def eval_revdict(args, summary):
     ## define accumulators for rank-cosine
     all_preds = collections.defaultdict(list)
     all_refs = collections.defaultdict(list)
+    all_train = collections.defaultdict(list)
+    print("vec_archs", vec_archs)
+    print("reference", reference[0])
 
+
+  
+    
     assert len(submission) == len(reference), "Missing items in submission!"
     ## retrieve vectors
+    # for sub, ref in zip(submission, reference):
     for sub, ref in zip(submission, reference):
-        assert sub["id"] == ref["id"], "Mismatch in submission and reference files!"
-        for arch in vec_archs:
-            all_preds[arch].append(sub[arch])
-            all_refs[arch].append(ref[arch])
+      assert sub["id"] == ref["id"], "Mismatch in submission and reference files!"
+      for arch in vec_archs:
+        all_preds[arch].append(sub[arch])
+        all_refs[arch].append(ref[arch])
+      all_refs["word"].append(ref["word"])
+    for ii in range(len(train)):
+        all_train[arch].append(train[ii][arch])
+        all_train["word"].append(train[ii]["word"])
 
     torch.autograd.set_grad_enabled(False)
+    # # Create a mapping dictionary to assign indices to words
+    # refword_to_index = {word: i for i, word in enumerate(set(all_refs["word"]))}
+    # trword_to_index = {word: i for i, word in enumerate(set(all_train["word"]))}
+
+    # # Convert all["word"] to a tensor of indices
+    # all_refs_word = torch.tensor([refword_to_index[word] for word in all_refs["word"]])
+    # all_train_word = torch.tensor([trword_to_index[word] for word in all_train["word"]])
+    # Convert all_train["word"] to a tensor of word strings
+    all_refs_word = all_refs["word"]
+    all_train_word = all_train["word"]
+
     all_preds = {arch: torch.tensor(all_preds[arch]) for arch in vec_archs}
     all_refs = {arch: torch.tensor(all_refs[arch]) for arch in vec_archs}
-    print("all_preds[arch][:][i]", all_preds[arch][:][0])
-    print("all_refs[arch][:][i]", all_refs[arch][:][0])
-    print("all_preds[arch][:][i]==all_refs[arch][:][i]", all_preds[arch][:][0]==all_refs[arch][:][0])
+    all_train= {arch: torch.tensor(all_train[arch]) for arch in vec_archs}
+
+    print("all_refsword", all_refs_word )
+    print("all_trainword", all_train_word)
+
 
 
     # acc= torchmetrics.Precision(task='multiclass') 
@@ -250,7 +286,7 @@ def eval_revdict(args, summary):
         arch: rank_cosine(all_preds[arch], all_refs[arch]) for arch in vec_archs
     }
     cos_closest_ranks={
-        arch: closest_ranks(all_preds[arch], all_refs[arch]).mean().item() for arch in vec_archs
+        arch: closest_ranks(all_preds[arch], all_refs[arch], all_train[arch],all_refs_word, all_train_word ) for arch in vec_archs
 
     }
 
