@@ -141,11 +141,11 @@ def closest_ranks(preds, targets, train, targetsword, trainword):
     print("mixed_targetsword[:][0]", mixed_targetsword[0])
     
     # Calculate cosine similarity between preds and mixed_targets
-    cosine_similarities = torch.mm(preds, mixed_targets.T)
+    cosine_similarities = F.normalize(preds) @ F.normalize(mixed_targets).T
     print("cosine_similarities", cosine_similarities)
     
     # Find the indices of the top 10 closest ranks for each prediction
-    _, topk_indices = torch.topk(-cosine_similarities, k=10, dim=1)
+    _, topk_indices = torch.topk(cosine_similarities, k=10, dim=1, largest=False)
     print("topk_indices", topk_indices)
     
     
@@ -161,6 +161,16 @@ def closest_ranks(preds, targets, train, targetsword, trainword):
       listOftop10.append([])
       for x in topk_indices[i]:
           listOftop10[i].append(mixed_targetsword[x])
+    
+    #closest_ranks = torch.argmin(torch.abs(cosine_similarities - cosine_similarities.diag().unsqueeze(1)), dim=1)
+    closest_ranks = torch.argmin(torch.abs(cosine_similarities), dim=1)
+    print(cosine_similarities - cosine_similarities.diag().unsqueeze(1))
+    # print(closest_ranks)
+    # Calculate precision at 1
+    precision_at_1 = (closest_ranks == torch.arange(len(preds))).tolist()
+    
+    accuracy = sum(precision_at_1) / len(preds)
+    print("Accuracy:", accuracy)
     
     print("listOftop10", listOftop10)
     # Calculate the closest rank for each prediction
