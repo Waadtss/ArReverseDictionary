@@ -314,9 +314,9 @@ def pred(args):
         pbar = tqdm.tqdm(desc="Pred.", total=len(test_dataset))
         for batch in test_dataloader:
             vecs = model(batch["gloss_tensor"].to(args.device)).cpu()
-            for id, vec in zip(batch["id"], vecs.unbind()):
+            for id, word, vec in zip(batch["id"], batch["word"],vecs.unbind()):
                 predictions.append(
-                    {"id": id, args.target_arch: vec.view(-1).cpu().tolist()}
+                    {"id": id, "word": word, args.target_arch: vec.view(-1).cpu().tolist()}
                 )
             pbar.update(vecs.size(0))
         pbar.close()

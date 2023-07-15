@@ -133,7 +133,7 @@ def closest_ranks2(preds, targets, train):
 
     return precision_at_1
 
-def closest_ranks(preds, targets, train, targetsword, trainword):
+def closest_ranks3(preds, targets, train, targetsword, trainword):
     # Append train tensor to targets
     mixed_targets = torch.cat((targets, ), dim=0)
     # mixed_targetsword = torch.cat((targetsword, trainword), dim=0)
@@ -212,7 +212,61 @@ def closest_ranks(preds, targets, train, targetsword, trainword):
     
     return closest_words
 
+def closest_ranks(preds, targets,  train= torch.tensor([]), targetsword=[], trainword=""):
+    # Append train tensor to targets
+    mixed_targets = torch.cat((targets, ), dim=0)
+    # mixed_targetsword = torch.cat((targetsword, trainword), dim=0)
+    mixed_targetsword = targetsword #+ trainword
+    print("mixed_targetsword[:][0]", mixed_targetsword[0])
 
+    # Calculate cosine similarity between preds and mixed_targets
+    cosine_similarities = F.normalize(preds) @ F.normalize(mixed_targets).T
+    print("cosine_similarities", cosine_similarities)
+
+    # Find the indices of the top 10 closest ranks for each prediction
+    _, topk_indices = torch.topk(cosine_similarities, k=10, dim=1)
+    print("topk_indices", topk_indices)
+
+    listOftop10=[]
+    for i in range(len(preds)):
+      listOftop10.append([])
+      for x in topk_indices[i]:
+          listOftop10[i].append(mixed_targets[x])
+
+    # Calculate precision at k=1
+    correct_prediction_at1 = 0
+    correct_predictions_atk = 0
+    for i in range(len(preds)):
+      # print("i", i, "topk_indices[i]", topk_indices[i])
+      if i in topk_indices[i][0]:
+        correct_prediction_at1 += 1
+      if i in topk_indices[i]:
+        correct_predictions_atk += 1
+
+
+    precision_at_1 = correct_prediction_at1 / len(preds)
+    precision_at_k = correct_predictions_atk / len(preds)
+    print("Precision at k=1:", precision_at_1*100)
+    print("Precision at k=10:", precision_at_k*100)
+
+    closest_indices = torch.empty_like(topk_indices)
+    for i in range(len(preds)):
+        closest_indices[i] = topk_indices[i] - targets.size(0) if i < targets.size(0) else topk_indices[i]
+    
+    df = pd.DataFrame(mixed_targetsword, columns=["word"])
+
+    # Convert tensor indices to NumPy array and take absolute values
+    closest_indices_np = torch.abs(closest_indices).numpy()
+    
+    # Retrieve words corresponding to closest_indices
+    closest_words = df.loc[closest_indices_np.flatten(), "word"].values.reshape(closest_indices.shape).tolist()
+
+    top10=pd.DataFrame()
+    top10["target"]=targetsword
+    top10["top10preds"]=closest_words
+    print("top10", top10)
+
+    return precision_at_1, precision_at_k
 
 def eval_revdict(args, summary):
     # 1. read contents
