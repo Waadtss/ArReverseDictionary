@@ -256,7 +256,8 @@ def closest_ranks(preds, targets,  train= torch.tensor([]), targetsword=[], trai
     df = pd.DataFrame(mixed_targetsword, columns=["word"])
 
     # Convert tensor indices to NumPy array and take absolute values
-    closest_indices_np = torch.abs(closest_indices).numpy()
+    closest_indices_np = torch.abs(topk_indices).numpy()
+
     
     # Retrieve words corresponding to closest_indices
     closest_words = df.loc[closest_indices_np.flatten(), "word"].values.reshape(closest_indices.shape).tolist()
@@ -266,7 +267,7 @@ def closest_ranks(preds, targets,  train= torch.tensor([]), targetsword=[], trai
     top10["top10preds"]=closest_words
     print("top10", top10)
 
-    return precision_at_1, precision_at_k
+    return [precision_at_1, precision_at_k]
 
 def eval_revdict(args, summary):
     # 1. read contents
@@ -374,8 +375,9 @@ def eval_revdict(args, summary):
             print(f"MSE_{summary.lang}_{arch}:{MSE_scores[arch]}", file=ostr)
             print(f"cos_{summary.lang}_{arch}:{cos_scores[arch]}", file=ostr)
             print(f"rnk_{summary.lang}_{arch}:{rnk_scores[arch]}", file=ostr)
-            print(f"cos_rank_{summary.lang}_{arch}:{cos_closest_ranks[arch]}", file=ostr)
-            # print(f"acc_{summary.lang}_{arch}:{acc2_scores[arch]}", file=ostr)
+            print(f"precision_at_1_{summary.lang}_{arch}:{cos_closest_ranks[arch][0]}", file=ostr)
+            print(f"precision_at_10_{summary.lang}_{arch}:{cos_closest_ranks[arch][1]}", file=ostr)
+           # print(f"acc_{summary.lang}_{arch}:{acc2_scores[arch]}", file=ostr)
             # print(f"acc_{summary.lang}_{arch}:{ignite_Accuracy[arch]}", file=ostr)
 
             
