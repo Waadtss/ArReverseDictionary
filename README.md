@@ -180,24 +180,4 @@ In the reverse dictionary, participants should construct JSON files that contain
 Other keys can be added. More details concerning the evaluation procedure are available here: [link](https://competitions.codalab.org/competitions/34022#learn_the_details-evaluation).
 
 
-# Using this repository
 
-The code and data of this shared task are provided under a CC-BY-SA license.
-If you use this repository in your research, please cite the task paper (to appear):
-```
-@inproceedings{mickus-etal-2022-semeval,
-    title = "{S}emeval-2022 Task 1: {CODWOE} {--} Comparing Dictionaries and Word Embeddings",
-    author = "Mickus, Timothee  and
-      Van Deemter, Kees  and
-      Constant, Mathieu  and
-      Paperno, Denis",
-    booktitle = "Proceedings of the 16th International Workshop on Semantic Evaluation (SemEval-2022)",
-    month = jul,
-    year = "2022",
-    address = "Seattle, United States",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2022.semeval-1.1",
-    pages = "1--14",
-    abstract = "Word embeddings have advanced the state of the art in NLP across numerous tasks. Understanding the contents of dense neural representations is of utmost interest to the computational semantics community. We propose to focus on relating these opaque word vectors with human-readable definitions, as found in dictionaries This problem naturally divides into two subtasks: converting definitions into embeddings, and converting embeddings into definitions. This task was conducted in a multilingual setting, using comparable sets of embeddings trained homogeneously.",
-}
-```
