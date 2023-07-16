@@ -1,6 +1,5 @@
 # Dataset access.
 
-**The datasets are available at the following page: [https://codwoe.atilf.fr/](https://codwoe.atilf.fr/).**
 
 # Dataset structure
 
