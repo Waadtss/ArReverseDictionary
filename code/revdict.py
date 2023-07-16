@@ -40,6 +40,11 @@ def get_parser(
         "--do_pred", action="store_true", help="whether to produce predictions"
     )
     parser.add_argument(
+        "--resume_train",
+         type=pathlib.Path,  
+         help="where the model & vocab is saved",
+    )
+    parser.add_argument(
         "--train_file", type=pathlib.Path, help="path to the train file"
     )
     parser.add_argument("--dev_file", type=pathlib.Path, help="path to the dev file")
@@ -81,7 +86,7 @@ def get_parser(
         type=pathlib.Path,
         default=pathlib.Path("revdict-baseline-preds.json"),
         help="where to save predictions",
-    )
+    )   
     return parser
 
 
@@ -98,7 +103,11 @@ def train(args):
     # 1. get data, vocabulary, summary writer
     logger.debug("Preloading data")
     ## make datasets
-    train_dataset = data.JSONDataset(args.train_file, maxlen=args.max_len)
+    if args.resume_train:
+        train_vocab = data.JSONDataset.load(args.resume_train / "train_dataset.pt").vocab
+        train_dataset = data.JSONDataset(args.train_file, maxlen=args.max_len, vocab=train_vocab)
+    else:
+        train_dataset = data.JSONDataset(args.train_file, maxlen=args.max_len)
     if args.dev_file:
         dev_dataset = data.JSONDataset(args.dev_file, vocab=train_dataset.vocab)
     ## assert they correspond to the task
@@ -124,12 +133,16 @@ def train(args):
     # 2. construct model
     ## Hyperparams
     logger.debug("Setting up training environment")
-    model = models.RevdictModel(train_dataset.vocab, d_model=args.max_len).to(args.device)
+    if args.resume_train:
+        model = models.RevdictModel.load(args.resume_train/ "model.pt")
+    else:
+        model = models.RevdictModel(train_dataset.vocab, d_model=args.max_len).to(args.device)
+         
     model.train()
 
     # 3. declare optimizer & criterion
     ## Hyperparams
-    EPOCHS, LEARNING_RATE, BETA1, BETA2, WEIGHT_DECAY = 1, 1.0e-4, 0.9, 0.999, 1.0e-6
+    EPOCHS, LEARNING_RATE, BETA1, BETA2, WEIGHT_DECAY = 100, 1.0e-4, 0.9, 0.999, 1.0e-6
     optimizer = optim.AdamW(
         model.parameters(),
         lr=LEARNING_RATE,
