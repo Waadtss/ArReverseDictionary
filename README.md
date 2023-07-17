@@ -19,11 +19,11 @@ A Reverse Dictionary (RD) is a type of dictionary that allows users to find word
 # Tasks
 ## Task1: Arabic RD
 The structure of reverse dictionaries (sequence-to-vector) is the opposite of traditional dictionaries lookup. This task focuses on the learning of how to convert human readable definitions into word embeddings vector in Arabic. The task involves reconstructing the word embedding vector of the defined word, rather than simply finding the target word, which is similar to the approach used by (Mickus et al., 2022; Zanzotto et al., 2010; Hill et al., 2016).
-This would enable the users to search for words based on the definition or meanings they anticipate, TOT. The training set of the data points should contain a source word vector representation and its corresponding word definition, as illustrated in Figure 1 (a) and (b). The proposed model should generate new word vector representations for the target unseen readable definitions in the test set. In this task the input for the model is Arabic word definition (gloss) and the output is Arabic word embeddings. 
+This would enable the users to search for words based on the definition or meanings they anticipate, TOT. The training set of the data points should contain a source word vector representation and its corresponding word definition, as illustrated in Figure 1 (a) and (b). The proposed model should generate new word vector representations for the target unseen readable definitions in the test set. In this task, the input for the model is Arabic word definition (gloss) and the output is Arabic word embeddings. 
 
 ## Task2: Cross-lingual Reverse Dictionary (CLRD)
 The objective of the cross-lingual reverse dictionaries task (sequence-to-vector) is to acquire the ability to transform readable definitions in English language into a vector representation for an Arabic word. The main objective of this task is to identify the most accurate and suitable Arabic word vector that can efficiently express the identical semantic interpretation as the provided English language definition or gloss, which is commonly known as Arabicization "تَعْرِيب". The task involves reconstructing the word embedding vector that represents the Arabic word to its corresponding English definition. This approach enables users to search for words in other languages based on their anticipated meanings or definitions in English. This task facilitates cross-lingual search, language understanding, and language translation.
-In this task the input for the model is English word definition (gloss) and the output is Arabic word embeddings. 
+In this task, the input for the model is English word definition (gloss) and the output is Arabic word embeddings. 
 
 # Submission and evaluation
 The evaluation of shared tasks will be hosted through CODALAB. Here are the CODALAB links for each task:
@@ -40,11 +40,9 @@ More information about the submissions we received is available in this git (see
 
 
 ## Baseline results
-Here are baseline results on the development set for the two tracks.
-We used the code described in `code/baseline_archs` to generate these scores.
+Here are the baseline results on the development set for the two tracks.
+We used the code described in `code/revdict.oy` to generate these scores.
 
-For the Reverse Dictionary track results, rows will correspond to different targets.
-On the other hand, rows of the Definition Modeling table below correspond to different inputs to the system.
 Scores were computed using the scoring script provided in this git (`code/score.py`).
 
 ### Reverse Dictionary track (RD)
@@ -67,19 +65,13 @@ Scores were computed using the scoring script provided in this git (`code/score.
 To install the exact environment used for our scripts, see the
 `requirements.txt` file which lists the library we used. Do
 note that the exact installation in the competition underwent supplementary
-tweaks: in particular, we patch the moverscore library to have it run on CPU.
+tweaks: in particular, we have utilized Colab Pro to run the experiment.
 
-Another possibility is to use the dockerfile written for the codalab
-competition. You can also pull this docker image from dockerhub:
-[`linguistickus/codwoe`](https://hub.docker.com/r/linguistickus/codwoe). This
-Docker image doesn't contain the code, so you will also need to clone the
-repository within it; but this image will also contain our tweaks.
+
 
 Code useful to participants is stored in the `code/` directory.
 To see options a simple baseline on the definition modeling track, use:
-```sh
-$ python3 code/revdict_entrypoint.py defmod --help
-```
+
 To see options for a simple baseline on the reverse dictionary track, use:
 ```sh
 $ python3 code/revdict_entrypoint.py revdict --help
@@ -103,7 +95,7 @@ datasets with the PyTorch dataset API.
 
 **Datasets are no longer provided directly on this repository. The competition datasets are now available on this page: [https://codwoe.atilf.fr/](https://codwoe.atilf.fr/).**
 
-This section details the structure of the JSON dataset file we provide. More information is available on the competition website: [link](https://competitions.codalab.org/competitions/34022#participate-get_data).
+This section details the structure of the JSON dataset file we provide. 
 
 ### Brief Overview
 
@@ -113,7 +105,12 @@ As an overview, the expected usage of the datasets is as follow:
 
 ### Dataset files structure
 
-Each dataset file correspond to a data split (train/dev/test) for one of the languages.
+Each dataset file correspond to a data split (train/dev/test).
+The dataset includes three main components:
+- Arabic dictionary has (58010) entries that were selected from LMF Contemporary Arabic dictionary after revising and editing by our annotation team **(Task1)**.
+- English dictionary from SemEval 2022 reverse dictionary task has (63596) entries **(Task2)**.
+- Mapped dictionary between Arabic and English words to be used as a supervision in the second task available here to download.
+
 
 Dataset files are in the JSON format. A dataset file contains a list of examples. Each example is a JSON dictionary, containing the following keys:
  + "id",
@@ -121,37 +118,57 @@ Dataset files are in the JSON format. A dataset file contains a list of examples
  + "gloss"
  + "sgns"
  + "electra"
+ + "enId"
 
 
-As a concrete instance, here is an example from the English training dataset:
+
+As a concrete instance, here is an example from the training dataset for Arabic dictionary, English dictionary, and Mapped dictionary, respectively:
 ```json
     {
-        "id": "en.train.2",
-        "gloss": "A vocal genre in Hindustani classical music",
-        "sgns": [
-            -0.0602365807,
-           ...
-        ],
-        "char": [
-            -0.3631578386,
-           ...
-        ],
-        "electra": [
-            -1.3904430866,
-           ...
-     ]
-    },
+"id":"ar.45",
+"word":"عين",
+"gloss":"عضو الإبصار في ...",
+"pos":"n",
+"electra":[0.4, 0.3, …],
+"sgns":[0.2, 0.5, …],
+"enId": "en.150"
+}
+
+
+{
+"id":"en.150",
+"word":"eye",
+"gloss":"One of the two ...",
+"pos":"n",
+"electra":[0.7, 0.1, …],
+"sgns":[0.2, 0.8, …]
+}
+
+{
+"id":"ar.45",
+"arword":"عين",
+"argloss":"عضو الإبصار في ...",
+"arpos":"n",
+"electra":[0.4, 0.3, …],
+"sgns":[0.2, 0.5, …],
+"enId":"en.150",
+"word":"eye",
+"gloss":"One of the two ...",
+"pos":"n",
+}
 ```
 
 ### Description of contents
 
-The value associated to "id" tracks the language, data split and unique identifier for this example.
+The value associated to "id" tracks the language and unique identifier for this example.
 
 The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used either the target in the Definition Modeling track, or  asthe source in the Reverse Dictionary track.
 
 All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary track.
  + "sgns" corresponds to skip-gram embeddings (word2vec)
  + "electra" corresponds to Transformer-based contextualized embeddings.
+The value associated to "enId" tracks the mapped identifier in the English dictionary.
+
 
 
 ### Using the dataset files
@@ -164,7 +181,6 @@ with open(PATH_TO_DATASET, "r") as file_handler:
     dataset = json.load(file_handler)
 ```
 
-A more complete example for pytorch is available in the git repository (see here: [link](https://git.atilf.fr/tmickus/codwoe/-/blob/master/code/data.py#L18)).
 
 ### Expected output format
 
@@ -177,7 +193,6 @@ In the reverse dictionary, participants should construct JSON files that contain
  + the original "id",
  + any of the valid embeddings ("sgns" or "electra" key in AR/EN)
 
-Other keys can be added. More details concerning the evaluation procedure are available here: [link](https://competitions.codalab.org/competitions/34022#learn_the_details-evaluation).
 
 
 
