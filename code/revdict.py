@@ -127,7 +127,7 @@ def train(args):
     if args.dev_file:
         dev_dataloader = data.get_dataloader(dev_dataset, shuffle=False, batch_size=1024)
     ## make summary writer
-    summary_writer = SummaryWriter(args.summary_logdir)
+    summary_writer = SummaryWriter(args.save_dir / args.summary_logdir)
     train_step = itertools.count()  # to keep track of the training steps for logging
 
     # 2. construct model
@@ -215,9 +215,10 @@ def train(args):
                     "revdict-dev/rnk", sum_rnk / len(dev_dataset), epoch
                 )
                 pbar.close()
-            model.save(args.save_dir / "modelepoch.pt")
-            train_dataset.save(args.save_dir / "train_datasetepoch.pt")
-            model.train()
+                model.train()
+        model.save(args.save_dir / "modelepoch.pt")
+        train_dataset.save(args.save_dir / "train_datasetepoch.pt")
+            
 
     # 5. save result
     model.save(args.save_dir / "model.pt")
