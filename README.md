@@ -136,7 +136,7 @@ As a concrete instance, here is an example from the training dataset for the Ara
 
 The value associated to "id" tracks the language and unique identifier for this example.
 
-The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used either the target in the Definition Modeling track, or  asthe source in the Reverse Dictionary track.
+The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used as the source in the Reverse Dictionary track.
 
 The value associated to "enId" tracks the mapped identifier in the English dictionary.
 
@@ -146,19 +146,8 @@ All other keys ("sgns", "electra") correspond to embeddings, and the associated 
 
 
 
-As a concrete instance, here is an example from the training dataset for the English dictionary and Mapped dictionary, respectively:
+As a concrete instance, here is an example from the training dataset for the Mapped dictionary:
 ```json
-
-#English dictionary
-
-{
-"id":"en.150",
-"word":"eye",
-"gloss":"One of the two ...",
-"pos":"n",
-"electra":[0.7, 0.1, …],
-"sgns":[0.2, 0.8, …]
-}
 
 #Mapped dictionary
 {
@@ -174,6 +163,34 @@ As a concrete instance, here is an example from the training dataset for the Eng
 "pos":"n",
 }
 ```
+
+The value associated to "id" tracks the Arabic unique identifier in the Arabic dictionary.
+
+The value associated to the "argloss" and "gloss" keys is the Arabic and English definitions, as you would find in an Arabic and English dictionary, respectively. It is to be used as the source in the Reverse Dictionary track.
+
+The value associated to "enId" tracks the mapped identifier in the English dictionary.
+
+All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary track.
+ + "sgns" corresponds to skip-gram embeddings (word2vec)
+ + "electra" corresponds to Transformer-based contextualized embeddings.
+
+
+As a concrete instance, here is an example from the training dataset for the English dictionary:
+```json
+
+#English dictionary
+
+{
+"id":"en.150",
+"word":"eye",
+"gloss":"One of the two ...",
+"pos":"n",
+"electra":[0.7, 0.1, …],
+"sgns":[0.2, 0.8, …]
+}
+
+```
+The English dictionary has the same value as the Arabic dictionary and can be utilized in the second task
 
 ### Using the dataset files
 
