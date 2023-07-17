@@ -215,6 +215,8 @@ def train(args):
                     "revdict-dev/rnk", sum_rnk / len(dev_dataset), epoch
                 )
                 pbar.close()
+            model.save(args.save_dir / "modelepoch.pt")
+            train_dataset.save(args.save_dir / "train_datasetepoch.pt")
             model.train()
 
     # 5. save result
@@ -248,7 +250,7 @@ def eval(args):
     # train_dataloader = data.get_dataloader(train_dataset, batch_size=512)
     dev_dataloader = data.get_dataloader(dev_dataset, shuffle=False, batch_size=1024)
     ## make summary writer
-    summary_writer = SummaryWriter(args.summary_logdir)
+    summary_writer = SummaryWriter(args.save_dir /args.summary_logdir)
 
     # 2. construct model
     ## Hyperparams
@@ -333,8 +335,8 @@ def pred(args):
                 )
             pbar.update(vecs.size(0))
         pbar.close()
-    with open(args.pred_file, "w") as ostr:
-        json.dump(predictions, ostr)
+    with open(args.save_dir /args.pred_file, "w") as ostr:
+        json.dump( predictions, ostr)
 
 
 def main(args):
