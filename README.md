@@ -27,8 +27,8 @@ In this task the input for the model is English word definition (gloss) and the 
 
 # Submission and evaluation
 The evaluation of shared tasks will be hosted through CODALAB. Here are the CODALAB links for each task:
-**[CODALAB link for task 1](https://codalab.lisn.upsaclay.fr/competitions/14568).**
-**[CODALAB link for task 2](https://codalab.lisn.upsaclay.fr/competitions/14569).**
++ **[CODALAB link for task 1](https://codalab.lisn.upsaclay.fr/competitions/14568).**
++ **[CODALAB link for task 2](https://codalab.lisn.upsaclay.fr/competitions/14569).**
 
 
 # How hard is it?
@@ -47,14 +47,20 @@ For the Reverse Dictionary track results, rows will correspond to different targ
 On the other hand, rows of the Definition Modeling table below correspond to different inputs to the system.
 Scores were computed using the scoring script provided in this git (`code/score.py`).
 
-### Reverse Dictionary track
+### Reverse Dictionary track (RD)
 
-|            | MSE     | Cosine  | Ranking
+|            | Cosine  |  MSE    | Ranking
 |------------|--------:|--------:|--------:
-| ar SGNS    | 0.91092 | 0.15132 | 0.49030
-| ar electra | 1.41287 | 0.84283 | 0.49849
+| ar SGNS    | 0.91092 | 0.15132 | 0.0
+| ar electra | 1.41287 | 0.84283 | 0.0
 
 
+### Cross-lingual Reverse Dictionary track (CLRD)
+
+|            | Cosine  |  MSE    | Ranking
+|------------|--------:|--------:|--------:
+| ar SGNS    | 0.26226 | 0.04922 | 0.50167
+| ar electra | 0.54090 | 0.22105 | 0.36222
 
 
 # Using this repository
