@@ -122,9 +122,10 @@ Dataset files are in the JSON format. A dataset file contains a list of examples
 
 
 
-As a concrete instance, here is an example from the training dataset for Arabic dictionary, English dictionary, and Mapped dictionary, respectively:
+As a concrete instance, here is an example from the training dataset for the Arabic dictionary, English dictionary, and Mapped dictionary, respectively:
 ```json
-    {
+#Arabic dictionary
+{
 "id":"ar.45",
 "word":"عين",
 "gloss":"عضو الإبصار في ...",
