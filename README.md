@@ -104,12 +104,12 @@ As an overview, the expected usage of the datasets is as follows:
 
 Each dataset file corresponds to a data split (train/dev/test).
 The datasets include three main components:
--  Arabic dictionary has (58010) entries that were selected from LMF Contemporary Arabic dictionary after revising and editing by our annotation team **(Task1)**.
--  Mapped dictionary between Arabic and English words to be used as supervision in the second task available here to download **(Task2)**.
--  English dictionary from SemEval 2022 reverse dictionary task has (63596) entries. 
+-  **Arabic dictionary** has (58010) entries that were selected from LMF Contemporary Arabic dictionary after revising and editing by our annotation team **(Task1)**.
+-  **Mapped dictionary** between Arabic and English words to be used as supervision in the second task available here to download **(Task2)**.
+-  **English dictionary** from SemEval 2022 reverse dictionary task has (63596) entries. 
 
 
-Dataset files are in the JSON format. A dataset file contains a list of examples. Each example is a JSON dictionary, containing the following keys:
+Dataset files are in JSON format. A dataset file contains a list of examples. Each example is a JSON dictionary, containing the following keys:
  + "id",
  + "word"
  + "gloss"
@@ -119,7 +119,7 @@ Dataset files are in the JSON format. A dataset file contains a list of examples
 
 
 
-As a concrete instance, here is an example from the training dataset for the Arabic dictionary, English dictionary, and Mapped dictionary, respectively:
+As a concrete instance, here is an example from the training dataset for the Arabic dictionary:
 ```json
 #Arabic dictionary
 {
@@ -131,6 +131,23 @@ As a concrete instance, here is an example from the training dataset for the Ara
 "sgns":[0.2, 0.5, …],
 "enId": "en.150"
 }
+
+```
+
+The value associated to "id" tracks the language and unique identifier for this example.
+
+The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used either the target in the Definition Modeling track, or  asthe source in the Reverse Dictionary track.
+
+The value associated to "enId" tracks the mapped identifier in the English dictionary.
+
+All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary track.
+ + "sgns" corresponds to skip-gram embeddings (word2vec)
+ + "electra" corresponds to Transformer-based contextualized embeddings.
+
+
+
+As a concrete instance, here is an example from the training dataset for the English dictionary and Mapped dictionary, respectively:
+```json
 
 #English dictionary
 
@@ -157,19 +174,6 @@ As a concrete instance, here is an example from the training dataset for the Ara
 "pos":"n",
 }
 ```
-
-### Description of contents
-
-The value associated to "id" tracks the language and unique identifier for this example.
-
-The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used either the target in the Definition Modeling track, or  asthe source in the Reverse Dictionary track.
-
-All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary track.
- + "sgns" corresponds to skip-gram embeddings (word2vec)
- + "electra" corresponds to Transformer-based contextualized embeddings.
-The value associated to "enId" tracks the mapped identifier in the English dictionary.
-
-
 
 ### Using the dataset files
 
