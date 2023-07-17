@@ -92,9 +92,7 @@ datasets with the PyTorch dataset API.
 
 # Using the datasets
 
-**Datasets are no longer provided directly on this repository. The competition datasets are now available on this page: [https://codwoe.atilf.fr/](https://codwoe.atilf.fr/).**
-
-This section details the structure of the JSON dataset file we provide. 
+Datasets can be downloaded from [CODALAB](http:...). This section details the structure of the JSON dataset file we provide. 
 
 ### Brief Overview
 
