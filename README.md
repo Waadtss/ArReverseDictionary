@@ -1,8 +1,7 @@
-# Comparing Dictionaries and Word Embeddings
+# Arabic Reverse Dictionary Shared task at WANLP 2023
 
-This is the repository for the XXX
-which forked from ***SemEval 2022 Shared Task #1: Comparing
-Dictionaries and Word Embeddings (CODWOE)***.
+This is the repository for the Arabic Reverse Dictionary Shared task at WANLP 2023 which forked from SemEval 2022 Shared Task #1: Comparing
+Dictionaries and Word Embeddings (CODWOE).
 
 This repository currently contains: the baseline programs,  a scorer, a
 format-checker to help participants get started.
@@ -12,36 +11,31 @@ a number of useful features, such as scoring submissions, a format checker and a
 few simple baseline architectures. It is also the exact copy of what is used on
 the codalab.
 
-**Datasets are no longer provided directly on this repository. The competition datasets are now available on this page: [https://codwoe.atilf.fr/](https://codwoe.atilf.fr/).**
+**The competition datasets are now available on this page: [https://codwoe.atilf.fr/](https://codwoe.atilf.fr/).**
 
-# What is this task?
-The CODWOE shared task invites you to compare two types of semantic
-descriptions: dictionary glosses and word embedding representations. Are these
-two types of representation equivalent? Can we generate one from the other? To
-study this question, we propose two subtracks: a **definition modeling** track
-(Noraset et al., 2017), where participants have to generate glosses from
-vectors, and a **reverse dictionary** track (Hill et al., 2016), where
-participants have to generate vectors from glosses.
+# Introduction
+A Reverse Dictionary (RD) is a type of dictionary that allows users to find words based on their meanings or definitions. Unlike a traditional dictionary, where users search for a word by its spelling, a reverse dictionary allows users to enter a description of a word or a phrase, and the dictionary will generate a list of words that match that description. Reverse dictionaries can be useful for writers, crossword puzzle enthusiasts, and nonnative language learner and anyone looking to expand their vocabulary. Specifically, it addresses the Tip-of-Tongue (TOT) problem (Brown and McNeill, 1966), which refers to the situation where a person is aware of a word they want to say but is unable to express it accurately (Siddique and Sufyan Beg, 2019) .This shared task includes two subtasks: Arabic RD and Cross-lingual Reverse Dictionary (CLRD).
 
-These two tracks display a number of interesting characteristics. Definition
-modeling is a vector-to-sequence task, the reverse dictionary task is a
-sequence-to-vector task—and you know that kind of thing gets NLP people swearing
-out loud. These tasks are also useful for explainable AI, since they involve
-converting human-readable data into machine-readable data and back.
+# Tasks
+## Task1: Arabic RD
+The structure of reverse dictionaries (sequence-to-vector) is the opposite of traditional dictionaries lookup. This task focuses on the learning of how to convert human readable definitions into word embeddings vector in Arabic. The task involves reconstructing the word embedding vector of the defined word, rather than simply finding the target word, which is similar to the approach used by (Mickus et al., 2022; Zanzotto et al., 2010; Hill et al., 2016).
+This would enable the users to search for words based on the definition or meanings they anticipate, TOT. The training set of the data points should contain a source word vector representation and its corresponding word definition, as illustrated in Figure 1 (a) and (b). The proposed model should generate new word vector representations for the target unseen readable definitions in the test set. In this task the input for the model is Arabic word definition (gloss) and the output is Arabic word embeddings. 
 
-To get involved: check out the
-[codalab competition](https://competitions.codalab.org/competitions/34022).
-There is also a participants'
-["semeval2022-dictionaries-and-word-embeddings" google group](mailto:semeval2022-dictionaries-and-word-embeddings@googlegroups.com),
-as well as a [discord server](https://discord.gg/y8g6qXakNs).
-You can reach us organizers through [this email](mailto:tmickus@atilf.fr); make
-sure to mention SemEval in your email object.
+## Task2: Cross-lingual Reverse Dictionary (CLRD)
+The objective of the cross-lingual reverse dictionaries task (sequence-to-vector) is to acquire the ability to transform readable definitions in English language into a vector representation for an Arabic word. The main objective of this task is to identify the most accurate and suitable Arabic word vector that can efficiently express the identical semantic interpretation as the provided English language definition or gloss, which is commonly known as Arabicization "تَعْرِيب". The task involves reconstructing the word embedding vector that represents the Arabic word to its corresponding English definition. This approach enables users to search for words in other languages based on their anticipated meanings or definitions in English. This task facilitates cross-lingual search, language understanding, and language translation.
+In this task the input for the model is English word definition (gloss) and the output is Arabic word embeddings. 
+
+# Submission and evaluation
+The evaluation of shared tasks will be hosted through CODALAB. Here are the CODALAB links for each task:
+**[CODALAB link for task 1](https://codalab.lisn.upsaclay.fr/competitions/14568).**
+**[CODALAB link for task 2](https://codalab.lisn.upsaclay.fr/competitions/14569).**
+
 
 # How hard is it?
 
 ## Official rankings
 
-Below are the official rankings for the SemEval 2022 CODWOE Shared task.
+Below are the official rankings for the  Arabic Reverse Dictionary Shared task.
 More information about the submissions we received is available in this git (see the `rankings/` sub-directory).
 
 
