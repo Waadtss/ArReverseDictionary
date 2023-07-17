@@ -36,7 +36,6 @@ The evaluation of shared tasks will be hosted through CODALAB. Here are the CODA
 ## Official rankings
 
 Below are the official rankings for the  Arabic Reverse Dictionary Shared task.
-More information about the submissions we received is available in this git (see the `rankings/` sub-directory).
 
 
 ## Baseline results
