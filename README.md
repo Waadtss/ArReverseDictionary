@@ -16,6 +16,12 @@ the codalab.
 # Introduction
 A Reverse Dictionary (RD) is a type of dictionary that allows users to find words based on their meanings or definitions. Unlike a traditional dictionary, where users search for a word by its spelling, a reverse dictionary allows users to enter a description of a word or a phrase, and the dictionary will generate a list of words that match that description. Reverse dictionaries can be useful for writers, crossword puzzle enthusiasts, and nonnative language learner and anyone looking to expand their vocabulary. Specifically, it addresses the Tip-of-Tongue (TOT) problem (Brown and McNeill, 1966), which refers to the situation where a person is aware of a word they want to say but is unable to express it accurately (Siddique and Sufyan Beg, 2019). This shared task includes two subtasks: Arabic RD and Cross-lingual Reverse Dictionary (CLRD).
 
+This shared task includes 2 tracks:
+- Closed Task: In this track, participants should only use the provided dataset.
+- Open Track: Participants can develop their own datasets using the provided English and Arabic dictionaries.
+
+
+
 # Tasks
 ## Task1: Arabic RD (Closed Track)
 The structure of reverse dictionaries (sequence-to-vector) is the opposite of traditional dictionaries lookup. This task focuses on the learning of how to convert human readable definitions into word embeddings vector in Arabic. The task involves reconstructing the word embedding vector of the defined word, rather than simply finding the target word, which is similar to the approach used by (Mickus et al., 2022; Zanzotto et al., 2010; Hill et al., 2016).
