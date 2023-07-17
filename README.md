@@ -135,6 +135,7 @@ As a concrete instance, here is an example from the training dataset for the Ara
 "enId": "en.150"
 }
 
+#English dictionary
 
 {
 "id":"en.150",
@@ -145,6 +146,7 @@ As a concrete instance, here is an example from the training dataset for the Ara
 "sgns":[0.2, 0.8, …]
 }
 
+#Mapped dictionary
 {
 "id":"ar.45",
 "arword":"عين",
