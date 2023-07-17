@@ -54,10 +54,10 @@ Scores were computed using the scoring script provided in this git (`code/score.
 
 ### Cross-lingual Reverse Dictionary track (CLRD)
 
-|            | Cosine  |  MSE    | Ranking
-|------------|--------:|--------:|--------:
-| ar SGNS    | 0.26226 | 0.04922 | 0.50167
-| ar electra | 0.54090 | 0.22105 | 0.36222
+|            | No. of epoch| Cosine  |  MSE    | Ranking
+|------------|------------:|--------:|--------:|--------:
+| ar SGNS    |     300     | 0.26226 | 0.04922 | 0.50167
+| ar electra |     300     | 0.54090 | 0.22105 | 0.36222
 
 
 # Using this repository
