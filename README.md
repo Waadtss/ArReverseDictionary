@@ -96,17 +96,17 @@ Datasets can be downloaded from [CODALAB](http:...). This section details the st
 
 ### Brief Overview
 
-As an overview, the expected usage of the datasets is as follow:
+As an overview, the expected usage of the datasets is as follows:
  + In the Reverse Dictionary track, we expect participants to use the definition ("gloss") to generate any of the associated embeddings ( "sgns", "electra").
 
 
 ### Dataset files structure
 
-Each dataset file correspond to a data split (train/dev/test).
-The dataset includes three main components:
-- Arabic dictionary has (58010) entries that were selected from LMF Contemporary Arabic dictionary after revising and editing by our annotation team **(Task1)**.
-- English dictionary from SemEval 2022 reverse dictionary task has (63596) entries **(Task2)**.
-- Mapped dictionary between Arabic and English words to be used as a supervision in the second task available here to download.
+Each dataset file corresponds to a data split (train/dev/test).
+The datasets include three main components:
+- 1. Arabic dictionary has (58010) entries that were selected from LMF Contemporary Arabic dictionary after revising and editing by our annotation team **(Task1)**.
+- 2. Mapped dictionary between Arabic and English words to be used as supervision in the second task available here to download **(Task2)**.
+- 3. English dictionary from SemEval 2022 reverse dictionary task has (63596) entries. 
 
 
 Dataset files are in the JSON format. A dataset file contains a list of examples. Each example is a JSON dictionary, containing the following keys:
