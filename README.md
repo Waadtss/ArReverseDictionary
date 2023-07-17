@@ -11,7 +11,7 @@ a number of useful features, such as scoring submissions, a format checker and a
 few simple baseline architectures. It is also the exact copy of what is used on
 the codalab.
 
-**The competition datasets for [Task1](https://codalab.lisn.upsaclay.fr/competitions/14568) and [Task2](https://codalab.lisn.upsaclay.fr/competitions/14569) are now available: .**
+**The competition datasets for [Task1](https://codalab.lisn.upsaclay.fr/competitions/14568) and [Task2](https://codalab.lisn.upsaclay.fr/competitions/14569) are now available.**
 
 # Introduction
 A Reverse Dictionary (RD) is a type of dictionary that allows users to find words based on their meanings or definitions. Unlike a traditional dictionary, where users search for a word by its spelling, a reverse dictionary allows users to enter a description of a word or a phrase, and the dictionary will generate a list of words that match that description. Reverse dictionaries can be useful for writers, crossword puzzle enthusiasts, and nonnative language learner and anyone looking to expand their vocabulary. Specifically, it addresses the Tip-of-Tongue (TOT) problem (Brown and McNeill, 1966), which refers to the situation where a person is aware of a word they want to say but is unable to express it accurately (Siddique and Sufyan Beg, 2019). This shared task includes two subtasks: Arabic RD and Cross-lingual Reverse Dictionary (CLRD).
