@@ -52,8 +52,8 @@ Scores were computed using the scoring script provided in this git (`code/score.
 
 |            | No. of epoch| Cosine  |  MSE    | Ranking
 |------------|------------:|--------:|--------:|--------:
-| ar SGNS    |     200     | 0.26226 | 0.04922 | 0.50167
-| ar electra |     200     | 0.54090 | 0.22105 | 0.36222
+| ar SGNS    |     200     | soon    | soon    | soon
+| ar electra |     200     | 0.48848 | 0.24941 | 0.31277
 
 
 ### Cross-lingual Reverse Dictionary track (CLRD)
@@ -85,7 +85,7 @@ $ python3 code/revdict_entrypoint.py check-format $PATH_TO_SUBMISSION_FILE
 ```
 To score a submission, use  
 ```sh
-$ python3 code/revdict_entrypoint.py score $PATH_TO_SUBMISSION_FILE --reference_files_dir $PATH_TO_DATA_DIR
+$ python3 code/revdict_entrypoint.py score $PATH_TO_SUBMISSION_FILE --reference_files_dir $PATH_TO_DATA_FILE
 ```
 Note that this requires the gold files, not available at the start of the
 competition.
