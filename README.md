@@ -85,7 +85,7 @@ $ python3 code/revdict_entrypoint.py check-format $PATH_TO_SUBMISSION_FILE
 ```
 To score a submission, use  
 ```sh
-$ python3 code/revdict_entrypoint.py score $PATH_TO_SUBMISSION_FILE --reference_files_dir $PATH_TO_DATA_DIR
+$ python3 code/revdict_entrypoint.py score $PATH_TO_SUBMISSION_FILE --reference_files_dir $PATH_TO_DATA_FILE
 ```
 Note that this requires the gold files, not available at the start of the
 competition.
