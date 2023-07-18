@@ -202,7 +202,7 @@ def eval_revdict(args, summary):
     all_preds = {arch: torch.tensor(all_preds[arch]) for arch in vec_archs}
     all_refs = {arch: torch.tensor(all_refs[arch]) for arch in vec_archs}
     all_train= {arch: torch.tensor(all_train[arch]) for arch in vec_archs}
-    
+
 
     # 2. compute scores
     MSE_scores = {
@@ -257,7 +257,6 @@ def main(args):
         args.submission_file = submission_file
         args.reference_file = (
             args.reference_files_dir
-            / f"{summary.lang}.newDvNotRep.json"
         )
         eval_func = eval_revdict
         eval_func(args, summary)
