@@ -148,7 +148,7 @@ def closest_ranks(preds, targets,  targetsword=[] ):
     # top10["target"]=targetsword
     # top10["top10preds"]=closest_words
 
-    # return [precision_at_1, precision_at_k]
+    return [precision_at_1, precision_at_k]
 
 def eval_revdict(args, summary):
     # 1. read contents
