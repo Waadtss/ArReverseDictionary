@@ -6,7 +6,7 @@ import logging
 import os
 import pathlib
 import sys
-import pandas as pd
+# import pandas as pd
 
 
 logger = logging.getLogger(pathlib.Path(__file__).name)
@@ -100,10 +100,9 @@ def rank_cosine(preds, targets):
     return ranks / preds.size(0)
 
 
-def closest_ranks(preds, targets,  train= torch.tensor([]), targetsword=[], trainword=""):
+def closest_ranks(preds, targets,  targetsword=[] ):
     # Append train tensor to targets
     mixed_targets = torch.cat((targets, ), dim=0)
-    # mixed_targetsword = torch.cat((targetsword, trainword), dim=0)
     mixed_targetsword = targetsword #+ trainword
 
     # Calculate cosine similarity between preds and mixed_targets
@@ -136,20 +135,20 @@ def closest_ranks(preds, targets,  train= torch.tensor([]), targetsword=[], trai
     for i in range(len(preds)):
         closest_indices[i] = topk_indices[i] - targets.size(0) if i < targets.size(0) else topk_indices[i]
     
-    df = pd.DataFrame(mixed_targetsword, columns=["word"])
+    # df = pd.DataFrame(mixed_targetsword, columns=["word"])
 
     # Convert tensor indices to NumPy array and take absolute values
-    closest_indices_np = torch.abs(topk_indices).numpy()
+    # closest_indices_np = torch.abs(topk_indices).numpy()
 
     
     # Retrieve words corresponding to closest_indices
-    closest_words = df.loc[closest_indices_np.flatten(), "word"].values.reshape(closest_indices.shape).tolist()
+    # closest_words = df.loc[closest_indices_np.flatten(), "word"].values.reshape(closest_indices.shape).tolist()
 
-    top10=pd.DataFrame()
-    top10["target"]=targetsword
-    top10["top10preds"]=closest_words
+    # top10=pd.DataFrame()
+    # top10["target"]=targetsword
+    # top10["top10preds"]=closest_words
 
-    return [precision_at_1, precision_at_k]
+    # return [precision_at_1, precision_at_k]
 
 def eval_revdict(args, summary):
     # 1. read contents
@@ -158,8 +157,8 @@ def eval_revdict(args, summary):
         submission = sorted(json.load(fp), key=lambda r: r["id"])
     with open(args.reference_file, "r") as fp:
         reference = sorted(json.load(fp), key=lambda r: r["id"])
-    with open('/content/gdrive/MyDrive/sharedTask/lookups/Train.json', "r") as fp:
-        train = sorted(json.load(fp), key=lambda r: r["id"])
+    # with open('/content/gdrive/MyDrive/sharedTask/lookups/Train.json', "r") as fp:
+    #     train = sorted(json.load(fp), key=lambda r: r["id"])
     vec_archs = sorted(
         set(submission[0].keys())
         - {
@@ -177,7 +176,7 @@ def eval_revdict(args, summary):
     ## define accumulators for rank-cosine
     all_preds = collections.defaultdict(list)
     all_refs = collections.defaultdict(list)
-    all_train = collections.defaultdict(list)
+    # all_train = collections.defaultdict(list)
 
   
     
@@ -189,19 +188,19 @@ def eval_revdict(args, summary):
         all_preds[arch].append(sub[arch])
         all_refs[arch].append(ref[arch])
       all_refs["word"].append(ref["word"])
-    for ii in range(len(train)):
-        all_train[arch].append(train[ii][arch])
-        all_train["word"].append(train[ii]["word"])
+    # for ii in range(len(train)):
+    #     all_train[arch].append(train[ii][arch])
+    #     all_train["word"].append(train[ii]["word"])
 
     torch.autograd.set_grad_enabled(False)
 
     # Convert all_train["word"] to a tensor of word strings
     all_refs_word = all_refs["word"]
-    all_train_word = all_train["word"]
+    # all_train_word = all_train["word"]
 
     all_preds = {arch: torch.tensor(all_preds[arch]) for arch in vec_archs}
     all_refs = {arch: torch.tensor(all_refs[arch]) for arch in vec_archs}
-    all_train= {arch: torch.tensor(all_train[arch]) for arch in vec_archs}
+    # all_train= {arch: torch.tensor(all_train[arch]) for arch in vec_archs}
 
 
     # 2. compute scores
@@ -216,7 +215,7 @@ def eval_revdict(args, summary):
         arch: rank_cosine(all_preds[arch], all_refs[arch]) for arch in vec_archs
     }
     cos_closest_ranks={
-        arch: closest_ranks(all_preds[arch], all_refs[arch], all_train[arch],all_refs_word, all_train_word ) for arch in vec_archs
+        arch: closest_ranks(all_preds[arch], all_refs[arch], all_refs_word ) for arch in vec_archs
 
     }
 
