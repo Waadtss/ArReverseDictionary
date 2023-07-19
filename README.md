@@ -73,7 +73,6 @@ tweaks: in particular, we have utilized Colab Pro to run the experiment.
 
 
 Code useful to participants is stored in the `code/` directory.
-To see options a simple baseline on the definition modeling track, use:
 
 To see options for a simple baseline on the reverse dictionary track, use:
 ```sh
