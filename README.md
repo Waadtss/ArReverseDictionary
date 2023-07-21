@@ -4,7 +4,7 @@ This is the repository for the Arabic Reverse Dictionary Shared task at WANLP 20
 Dictionaries and Word Embeddings (CODWOE).
 
 This repository currently contains: the baseline programs,  a scorer, a
-format-checker to help participants get started.
+format-checker to help participants get started. 
 
 
 Participants may be interested in the script revdict_entrypoint.py. It contains a number of useful features, such as scoring submissions, a format checker, and a few simple baseline architectures. It is also an exact copy of what is used on the Codalab platform.
