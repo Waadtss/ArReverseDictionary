@@ -63,15 +63,15 @@ To install the exact environment used for the scripts, see the `requirements.txt
 
 The code useful to participants is stored in the `code/` directory.
 
-To see options for a simple baseline on the reverse dictionary track, use:
++ To see options for a simple baseline on the reverse dictionary track, use:
 ```sh
 $ python3 code/revdict_entrypoint.py revdict --help
 ```
-To verify the format of a submission, run:
++ To verify the format of a submission, run:
 ```sh
 $ python3 code/revdict_entrypoint.py check-format $PATH_TO_SUBMISSION_FILE
 ```
-To score a submission, use  
++ To score a submission, use  
 ```sh
 $ python3 code/revdict_entrypoint.py score $PATH_TO_SUBMISSION_FILE --reference_files_dir $PATH_TO_DATA_FILE
 ```
