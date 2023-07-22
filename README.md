@@ -141,7 +141,7 @@ with open(PATH_TO_DATASET, "r") as file_handler:
 
 
 
-## Baseline results
+# Baseline results
 Here are the baseline results on the development set for the two tracks.
 The code described in `code/revdict.oy` was used to generate these scores.
 
