@@ -182,7 +182,7 @@ As a concrete instance, here is an example from the training dataset for the Eng
 }
 
 ```
-The English dictionary has the same value as the Arabic dictionary and can be utilized in the second task
+The English dictionary has the same keys as the Arabic dictionary and can be utilized in the second task
 
 ### Using the dataset files
 
