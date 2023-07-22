@@ -27,7 +27,7 @@ In this task, the input for the model is an English word definition (gloss) and 
 
 # Datasets
 
-Datasets can be downloaded from [CODALAB-Task1](https://codalab.lisn.upsaclay.fr/competitions/14568) and  [CODALAB-Task1](ttps://codalab.lisn.upsaclay.fr/competitions/14569). This section details the structure of the JSON dataset file provided. 
+Datasets can be downloaded from [CODALAB-Task1](https://codalab.lisn.upsaclay.fr/competitions/14568) and  [CODALAB-Task2](https://codalab.lisn.upsaclay.fr/competitions/14569). This section details the structure of the JSON dataset file provided. 
 
 ### Brief Overview
 
@@ -163,12 +163,8 @@ Scores were computed using the scoring script provided in this git (`code/score.
 | ar electra |     300     | 0.54090 | 0.22105 | 0.36222
 
 # Submission and evaluation
-The model evaluation process follows a hierarchy of metrics. The primary metric is the
-                        ranking metric, which is used to assess how well the model ranks predictions compared to
-                        ground truth values. If models have similar rankings, the secondary metric, mean squared
-                        error (MSE), is considered. Lastly, if further differentiation is needed, the tertiary
-                        metric, cosine similarity, provides additional insights. This approach ensures the selection
-                        of a top-performing and well-rounded model.
+The model evaluation process follows a hierarchy of metrics. The primary metric is the ranking metric, which is used to assess how well the model ranks predictions compared to ground truth values. If models have similar rankings, the secondary metric, mean squared error (MSE), is considered. Lastly, if further differentiation is needed, the tertiary metric, cosine similarity, provides additional insights. This approach ensures the selection of a top-performing and well-rounded model.
+
 The evaluation of shared tasks will be hosted through CODALAB. Here are the CODALAB links for each task:
 + **[CODALAB link for task 1](https://codalab.lisn.upsaclay.fr/competitions/14568).**
 + **[CODALAB link for task 2](https://codalab.lisn.upsaclay.fr/competitions/14569).**
