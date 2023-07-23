@@ -43,7 +43,7 @@ As an overview, the participants are expected to use the definition ("gloss") to
 
 Each dataset file corresponds to a data split (train/dev/test).
 The datasets include three main components:
--  **Arabic dictionary** has (58010) entries that were selected from LMF Contemporary Arabic dictionary after revising and editing by our annotation team **(Task1)**.
+-  **Arabic dictionary** has (58010) entries that were selected from [LMF Contemporary Arabic dictionary](https://lindat.cz/repository/xmlui/handle/11372/LRT-1944?locale-attribute=en) after revising and editing by our annotation team **(Task1)**.
 -  **Mapped dictionary** between Arabic and English words to be used as supervision in the second task available here to download **(Task2)**.
 -  **English dictionary** from SemEval 2022 reverse dictionary task has (63596) entries. 
 
