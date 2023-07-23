@@ -177,7 +177,7 @@ The evaluation of shared tasks will be hosted through CODALAB. Here are the CODA
 
 During the evaluation phase, submissions are expected to reconstruct the same JSON format.
 
-The test JSON files will contain the "id" key, and the embedding keys ("sgns" and "electra") (in the RD and CLRD tasks)
+The test JSON files will contain the "id" key, and the embedding keys ("sgns" and "electra")
 
 
 In both RD and CLRD, participants should construct JSON files that contain at least the two following keys:
