@@ -16,7 +16,7 @@ A Reverse Dictionary (RD) is a type of dictionary that allows users to find word
 
 # Tasks
 ## Task1: Arabic RD (Closed Track)
-The structure of reverse dictionaries (sequence-to-vector) is the opposite of traditional dictionaries. This task focuses on learning how to convert words definition into word embeddings vectors in Arabic. The task involves reconstructing the word embedding vector of the defined word, rather than simply finding the target word.This would enable the users to search for words based on the definition or meanings they anticipate. 
+The structure of reverse dictionaries (sequence-to-vector) is the opposite of traditional dictionaries. This task focuses on learning how to convert word's definition into word embeddings vectors in Arabic. The task involves reconstructing the word embedding vector of the defined word, rather than simply finding the target word.This would enable the users to search for words based on the definition or meanings they anticipate. 
 The training set of the data points should contain word vector representation and its corresponding word definition (gloss). 
 The proposed model should generate new word vector representations for the target unseen readable definitions in the test set. 
 
@@ -24,6 +24,7 @@ In this task, the input for the model is an Arabic word definition (gloss) and t
 
 ## Task2: Cross-lingual Reverse Dictionary (CLRD) (Open Track)
 The objective of the cross-lingual reverse dictionaries task (sequence-to-vector) is to acquire the ability to transform readable definitions in English language into a vector representation for an Arabic word. The main objective of this task is to identify the most accurate and suitable Arabic word vector that can efficiently express the identical semantic interpretation as the provided English language definition or gloss, which is commonly known as Arabicization "تَعْرِيب". The task involves reconstructing the word embedding vector that represents the Arabic word to its corresponding English definition. This approach enables users to search for words in other languages based on their anticipated meanings or definitions in English. This task facilitates cross-lingual search, language understanding, and language translation.
+
 In this task, the input for the model is an English word definition (gloss) and the output is Arabic word embeddings. 
 
 # Datasets
