@@ -24,7 +24,9 @@ In this task, the input for the model is an Arabic word definition (gloss) and t
 
 ## Task2: Cross-lingual Reverse Dictionary (CLRD) (Open Track)
 The objective of the cross-lingual reverse dictionaries task (sequence-to-vector) is to acquire the ability to convert an English definition into word embedding vectors in Arabic. The main objective of this task is to identify the most accurate and suitable Arabic word vector that can efficiently express the identical semantic English definition or gloss, which is referred to as Arabicization "تَعْرِيب". 
+
 The task involves reconstructing the word embedding vector that represents the Arabic word to its corresponding English definition. This approach enables users to search for words in other languages based on their anticipated meanings or definitions in English. This task facilitates cross-lingual search, language understanding, and language translation.
+
 
 In this task, the input for the model is an English word definition (gloss) and the output is Arabic word embeddings. 
 
