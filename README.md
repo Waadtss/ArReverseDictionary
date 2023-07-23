@@ -75,11 +75,11 @@ As a concrete instance, here is an example from the training dataset for the Ara
 
 The value associated to "id" key tracks the language and unique identifier for this example.
 
-The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used as the source in the Reverse Dictionary task.
+The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used as the source in the RD task.
 
 The value associated to "enId" key tracks the mapped identifier in the English dictionary.
 
-All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary task.
+All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the RD task.
  + "sgns" corresponds to skip-gram embeddings (word2vec)
  + "electra" corresponds to Transformer-based contextualized embeddings.
 
@@ -105,11 +105,11 @@ As a concrete instance, here is an example from the training dataset for the Map
 
 The value associated to "id" key tracks the Arabic unique identifier in the Arabic dictionary.
 
-The value associated to the "argloss" and "gloss" keys is the Arabic and English definitions, as you would find in an Arabic and English dictionary, respectively. It is to be used as the source in the Reverse Dictionary task.
+The value associated to the "argloss" and "gloss" keys is the Arabic and English definitions, as you would find in an Arabic and English dictionary, respectively. The "gloss" is to be used as the source in the CLRD task.
 
-The value associated to "enId" tracks the mapped identifier in the English dictionary.
+The value associated to "enId" key tracks the mapped identifier in the English dictionary.
 
-All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary task.
+All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the CLRD task.
  + "sgns" corresponds to skip-gram embeddings (word2vec)
  + "electra" corresponds to Transformer-based contextualized embeddings.
 
@@ -133,7 +133,7 @@ The English dictionary has the same keys as the Arabic dictionary and can be uti
 
 ### Using the dataset files
 
-Given that the data is in JSON format, it is straightforward to load it in python:
+Given that the data is in JSON format, it is straightforward to load it in Python:
 
 ```python
 import json
@@ -177,10 +177,10 @@ The evaluation of shared tasks will be hosted through CODALAB. Here are the CODA
 
 During the evaluation phase, submissions are expected to reconstruct the same JSON format.
 
-The test JSON files will contain the "id" key, and either the "gloss" key (in the reverse dictionary track)
+The test JSON files will contain the "id" key, and either the "gloss" key (in the RD and CLRD tasks)
 
 
-In the reverse dictionary, participants should construct JSON files that contain at least the two following keys:
+In both RD and CLRD, participants should construct JSON files that contain at least the two following keys:
  + the original "id",
  + any of the valid embeddings ("sgns" or "electra" key in AR/EN)
 
