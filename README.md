@@ -7,10 +7,8 @@ This repository currently contains the baseline programs,  a scorer, and a forma
 
 Participants may be interested in the script revdict_entrypoint.py. It contains a number of useful features, such as scoring submissions, a format checker, and a few simple baseline architectures. It is also an exact copy of what is used on the Codalab platform.
 
-**The competition datasets for [Task1](https://codalab.lisn.upsaclay.fr/competitions/14568) and [Task2](https://codalab.lisn.upsaclay.fr/competitions/14569) are now available.**
-
 This shared task includes 2 tracks:
-- Closed Track: In this track, participants should only use the provided dataset.
+- Closed Track: Participants should only use the provided dataset.
 - Open Track: Participants can develop their own datasets using the provided English and Arabic dictionaries.
 
 # Introduction
