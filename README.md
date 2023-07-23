@@ -48,7 +48,7 @@ The datasets include three main components:
 -  **English dictionary** from [SemEval 2022 reverse dictionary](https://aclanthology.org/2022.semeval-1.1/) task has (63596) entries. 
 
 
-Dataset files are in JSON format. A dataset file contains a list of examples. Each example is a JSON dictionary, containing the following keys:
+Dataset files are in JSON format. A dataset file contains a list of examples. Each example is a JSON object, containing the following keys:
  + "id"
  + "word"
  + "gloss"
