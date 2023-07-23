@@ -49,7 +49,7 @@ The datasets include three main components:
 
 
 Dataset files are in JSON format. A dataset file contains a list of examples. Each example is a JSON dictionary, containing the following keys:
- + "id",
+ + "id"
  + "word"
  + "gloss"
  + "sgns"
