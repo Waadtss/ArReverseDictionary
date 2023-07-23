@@ -32,12 +32,11 @@ In this task, the input for the model is an English word definition (gloss) and 
 
 # Datasets
 
-Datasets can be downloaded from [CODALAB-Task1](https://codalab.lisn.upsaclay.fr/competitions/14568) and  [CODALAB-Task2](https://codalab.lisn.upsaclay.fr/competitions/14569). This section details the structure of the JSON dataset file provided. 
+Datasets can be downloaded from [CODALAB-Task1](https://codalab.lisn.upsaclay.fr/competitions/14568) and  [CODALAB-Task2](https://codalab.lisn.upsaclay.fr/competitions/14569). This section details the structure of the JSON dataset files provided. 
 
 ### Brief Overview
 
-As an overview, the expected usage of the datasets is as follows:
- + In the Reverse Dictionary track, participants are expected to use the definition ("gloss") to generate any of the associated embeddings ( "sgns", "electra").
+As an overview, the participants are expected to use the definition ("gloss") to generate any of the associated embeddings ( "sgns", "electra").
 
 
 ### Dataset files structure
