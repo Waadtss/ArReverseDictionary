@@ -16,7 +16,7 @@ A Reverse Dictionary (RD) is a type of dictionary that allows users to find word
 
 # Tasks
 ## Task1: Arabic RD (Closed Track)
-The structure of reverse dictionaries (sequence-to-vector) is the opposite of traditional dictionaries. This task focuses on learning how to convert word's definition into word embeddings vectors in Arabic. The task involves reconstructing the word embedding vector of the defined word, rather than simply finding the target word.This would enable the users to search for words based on the definition or meanings they anticipate. 
+The structure of reverse dictionaries (sequence-to-vector) is the opposite of traditional dictionaries. This task focuses on learning how to convert a definition of the word into word embedding vectors in Arabic. The task involves reconstructing the word embedding vector of the defined word, rather than simply finding the target word.This would enable the users to search for words based on the definition or meanings they anticipate. 
 The training set of the data points should contain word vector representation and its corresponding word definition (gloss). 
 The proposed model should generate new word vector representations for the target unseen readable definitions in the test set. 
 
