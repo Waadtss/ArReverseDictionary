@@ -73,13 +73,13 @@ As a concrete instance, here is an example from the training dataset for the Ara
 
 ```
 
-The value associated to "id" tracks the language and unique identifier for this example.
+The value associated to "id" key tracks the language and unique identifier for this example.
 
-The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used as the source in the Reverse Dictionary track.
+The value associated to the "gloss" key is a definition, as you would find in a classical dictionary. It is to be used as the source in the Reverse Dictionary task.
 
-The value associated to "enId" tracks the mapped identifier in the English dictionary.
+The value associated to "enId" key tracks the mapped identifier in the English dictionary.
 
-All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary track.
+All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary task.
  + "sgns" corresponds to skip-gram embeddings (word2vec)
  + "electra" corresponds to Transformer-based contextualized embeddings.
 
@@ -103,13 +103,13 @@ As a concrete instance, here is an example from the training dataset for the Map
 }
 ```
 
-The value associated to "id" tracks the Arabic unique identifier in the Arabic dictionary.
+The value associated to "id" key tracks the Arabic unique identifier in the Arabic dictionary.
 
-The value associated to the "argloss" and "gloss" keys is the Arabic and English definitions, as you would find in an Arabic and English dictionary, respectively. It is to be used as the source in the Reverse Dictionary track.
+The value associated to the "argloss" and "gloss" keys is the Arabic and English definitions, as you would find in an Arabic and English dictionary, respectively. It is to be used as the source in the Reverse Dictionary task.
 
 The value associated to "enId" tracks the mapped identifier in the English dictionary.
 
-All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary track.
+All other keys ("sgns", "electra") correspond to embeddings, and the associated values are arrays of floats representing the components. They all can serve as targets for the Reverse Dictionary task.
  + "sgns" corresponds to skip-gram embeddings (word2vec)
  + "electra" corresponds to Transformer-based contextualized embeddings.
 
