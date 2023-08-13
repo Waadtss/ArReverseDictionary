@@ -48,12 +48,9 @@ The datasets include three main components:
 -  **English dictionary** from [SemEval 2022 reverse dictionary](https://aclanthology.org/2022.semeval-1.1/) task has (63596) entries. 
 
 
-Table 1: 
-		
-			
-			soon
 
-#### Data Statistics.
+
+#### Data Statistics
 
 |                                  |  Train   | Dev     |  Test    
 |----------------------------------|---------:|--------:|------:
