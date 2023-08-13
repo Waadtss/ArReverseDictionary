@@ -52,7 +52,7 @@ The datasets include three main components:
 
 #### Data Statistics
 
-|                                  |  Train   | Dev     |  Test    
+|                                  |  Train   |  Dev    |  Test    
 |----------------------------------|---------:|--------:|------:
 | Arabic Entries                   |  45,200  |  6,400  | 6,410 
 | Arabic English mapped dictionary |   2,843  |   299   | 1,213 
@@ -164,10 +164,12 @@ Scores were computed using the scoring script provided in this git (`code/score.
 
 ### Reverse Dictionary track (RD)
 
-|            | No. of epoch| Cosine  |  MSE    | Ranking
-|------------|------------:|--------:|--------:|--------:
-| ar SGNS    |     200     | 0.35610 | 0.05036 | 0.38523
-| ar electra |     200     | 0.48848 | 0.24941 | 0.31277
+Dev
+|            |             |          Dev                |          Test
+|            | No. of epoch| Cosine  |  MSE    | Ranking | Cosine  |  MSE    | Ranking
+|------------|------------:|--------:|--------:|--------:|--------:|--------:|--------:
+| ar SGNS    |     200     | 0.35610 | 0.05036 | 0.38523 |  soon   |  soon   |  soon
+| ar electra |     200     | 0.48848 | 0.24941 | 0.31277 |  soon   |  soon   |  soon
 
 
 ### Cross-lingual Reverse Dictionary track (CLRD)
