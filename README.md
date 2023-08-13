@@ -1,4 +1,4 @@
-# Arabic Reverse Dictionary Shared task at WANLP 2023
+# Arabic Reverse Dictionary Shared task at ArabicNLP 2023
 
 This is the repository for the Arabic Reverse Dictionary Shared task at WANLP 2023 which forked from SemEval 2022 Shared Task #1: Comparing
 Dictionaries and Word Embeddings (CODWOE).
@@ -155,7 +155,7 @@ Scores were computed using the scoring script provided in this git (`code/score.
 
 |            | No. of epoch| Cosine  |  MSE    | Ranking
 |------------|------------:|--------:|--------:|--------:
-| ar SGNS    |     200     | soon    | soon    | soon
+| ar SGNS    |     200     | 0.35610 | 0.05036 | 0.38523
 | ar electra |     200     | 0.48848 | 0.24941 | 0.31277
 
 
