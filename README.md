@@ -177,10 +177,11 @@ Scores were computed using the scoring script provided in this git (`code/score.
 
 ### Cross-lingual Reverse Dictionary track (CLRD)
 
-|            |`No. of epoch`|`Cosine` |  `MSE`  | `Ranking`
-|-----------:|:------------:|:-------:|:-------:|:-------:
-| ar SGNS    |     300      | 0.26226 | 0.04922 | 0.50167
-| ar electra |     300      | 0.54090 | 0.22105 | 0.36222
+|            |              |         |  Dev    |         |        |   Test  |         | 
+|-----------:|:------------:|:-------:|:-------:|:-------:|:------:|:-------:|:-------:|
+|            |`No. of epoch`|`Cosine` | `MSE`   |`Ranking`|`Cosine`| `MSE`   |`Ranking`|
+| ar SGNS    |     300      | 0.26226 | 0.04922 | 0.50167 |  soon  |  soon   |  soon   |
+| ar electra |     300      | 0.54090 | 0.22105 | 0.36222 |  soon  |  soon   |  soon   |
 
 # Submission and evaluation
 The model evaluation process follows a hierarchy of metrics. The **primary metric is the ranking metric**, which is used to assess how well the model ranks predictions compared to ground truth values. If models have similar rankings, the secondary metric, mean squared error (MSE), is considered. Lastly, if further differentiation is needed, the tertiary metric, cosine similarity, provides additional insights. This approach ensures the selection of a top-performing and well-rounded model.
