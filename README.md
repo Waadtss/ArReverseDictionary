@@ -164,7 +164,7 @@ Scores were computed using the scoring script provided in this git (`code/score.
 
 ### Reverse Dictionary track (RD)
 
-Dev
+
 |            |             |          Dev                |          Test
 |            | No. of epoch| Cosine  |  MSE    | Ranking | Cosine  |  MSE    | Ranking
 |------------|------------:|--------:|--------:|--------:|--------:|--------:|--------:
