@@ -51,12 +51,12 @@ The datasets include three main components:
 
 
  
-
+[Data Statistics]
 |                                  |  Train   |  Dev    |  Test    
 |----------------------------------|---------:|--------:|------:
 | Arabic Entries                   |  45,200  |  6,400  | 6,410 
 | Arabic English mapped dictionary |   2,843  |   299   | 1,213 
-[Data Statistics]
+
 
 
 
