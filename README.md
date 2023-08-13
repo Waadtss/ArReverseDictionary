@@ -177,7 +177,7 @@ Scores were computed using the scoring script provided in this git (`code/score.
 
 ### Cross-lingual Reverse Dictionary track (CLRD)
 
-|            |              |         |  Dev    |         |        |   Test  |         | 
+|            |              |   Dev   |  Dev    |   Dev   |  Test  |   Test  |   Test  | 
 |-----------:|:------------:|:-------:|:-------:|:-------:|:------:|:-------:|:-------:|
 |            |`No. of epoch`|`Cosine` | `MSE`   |`Ranking`|`Cosine`| `MSE`   |`Ranking`|
 | ar SGNS    |     300      | 0.26226 | 0.04922 | 0.50167 |  soon  |  soon   |  soon   |
