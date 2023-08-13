@@ -166,22 +166,22 @@ Scores were computed using the scoring script provided in this git (`code/score.
 ### Reverse Dictionary track (RD)
 
 
-|            |              |   Dev   |  Dev    |   Dev   |  Test  |   Test  |   Test  | 
-|-----------:|:------------:|:-------:|:-------:|:-------:|:------:|:-------:|:-------:|
-|            |`No. of epoch`|`Cosine` | `MSE`   |`Ranking`|`Cosine`| `MSE`   |`Ranking`|
-| ar SGNS    |     200      | 0.35610 | 0.05036 | 0.38523 |  soon  |  soon   |  soon   |
-| ar electra |     200      | 0.48848 | 0.24941 | 0.31277 |  soon  |  soon   |  soon   |
+|            |              |   Dev   |  Dev    |   Dev   |   Test   |   Test  |   Test  | 
+|-----------:|:------------:|:-------:|:-------:|:-------:|:--------:|:-------:|:-------:|
+|            |`No. of epoch`|`Cosine` | `MSE`   |`Ranking`| `Cosine` | `MSE`   |`Ranking`|
+| ar SGNS    |     200      | 0.35610 | 0.05036 | 0.38523 |  0.40583 | 0.04492 | 0.36280 |
+| ar electra |     200      | 0.48848 | 0.24941 | 0.31277 |  0.50794 | 0.23041 | 0.31879 |
 
 
 
 
 ### Cross-lingual Reverse Dictionary track (CLRD)
 
-|            |              |   Dev   |  Dev    |   Dev   |  Test  |   Test  |   Test  | 
-|-----------:|:------------:|:-------:|:-------:|:-------:|:------:|:-------:|:-------:|
-|            |`No. of epoch`|`Cosine` | `MSE`   |`Ranking`|`Cosine`| `MSE`   |`Ranking`|
-| ar SGNS    |     300      | 0.26226 | 0.04922 | 0.50167 |  soon  |  soon   |  soon   |
-| ar electra |     300      | 0.54090 | 0.22105 | 0.36222 |  soon  |  soon   |  soon   |
+|            |              |   Dev   |  Dev    |   Dev   |   Test  |   Test  |   Test  | 
+|-----------:|:------------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
+|            |`No. of epoch`|`Cosine` | `MSE`   |`Ranking`| `Cosine`| `MSE`   |`Ranking`|
+| ar SGNS    |     300      | 0.26226 | 0.04922 | 0.50167 | 0.25217 | 0.04853 | 0.49954 |
+| ar electra |     300      | 0.54090 | 0.22105 | 0.36222 | 0.51662 | 0.23811 | 0.40720 |
 
 # Submission and evaluation
 The model evaluation process follows a hierarchy of metrics. The **primary metric is the ranking metric**, which is used to assess how well the model ranks predictions compared to ground truth values. If models have similar rankings, the secondary metric, mean squared error (MSE), is considered. Lastly, if further differentiation is needed, the tertiary metric, cosine similarity, provides additional insights. This approach ensures the selection of a top-performing and well-rounded model.
