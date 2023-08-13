@@ -58,16 +58,6 @@ The datasets include three main components:
 | Arabic English mapped dictionary |   2,843  |   299   | 1,213 
 
 
-|               |          Grouping             ||         Grouping 2         ||  Not Grouped    |
-| First Header  | Second Header | Third Header   | Forth Header | Fifth Header | Sixth Header    |
-| ------------- | :-----------: | -------------: | :----------: | :----------: | --------------- |
-| Tall Cell     |          *Long Cell*          ||         *Long Long Cell*                    |||
-| ^^            |   **Bold**    | 1. first item  | *Italic*     | 3. third item | + first point  |\
-| ^^            |               | 1. second item |              | 1. forth item | + second point |
-
-| New section   |     More      |         Data   | ... - -- --- |||
-| And more      | With an escaped \|          || "Try 'quotes' in quotes "         |||
-[Compicated table]
 
 
 Dataset files are in JSON format. A dataset file contains a list of examples. Each example is a JSON object, containing the following keys:
