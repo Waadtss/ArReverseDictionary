@@ -165,7 +165,7 @@ Scores were computed using the scoring script provided in this git (`code/score.
 ### Reverse Dictionary track (RD)
 
 
-|            |             |          Dev                |          Test               |
+|                         ||          Dev               ||          Test              ||
 |            | No. of epoch| Cosine  |  MSE    | Ranking | Cosine  |  MSE    | Ranking |
 |------------|------------:|--------:|--------:|--------:|--------:|--------:|--------:|
 | ar SGNS    |     200     | 0.35610 | 0.05036 | 0.38523 |  soon   |  soon   |  soon   |
